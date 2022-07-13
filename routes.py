@@ -1,4 +1,6 @@
 #  Created by btrif Trif on 04-07-2022 , 10:47 PM.
+import string
+
 from flask import request, render_template, json, jsonify, make_response
 from models import app, Users, db, Mazes, MazeSchema
 
@@ -109,9 +111,20 @@ def create_maze(current_user):
         return jsonify(error_maze)
 
     # Check that Entrance Column is not bigger than the gridSize column index :
-    entrance_col, gridSize_col = int(entrance[1:]), int(gridSize.split('x')[1])
-    if entrance_col > gridSize_col :
-        return {'status' : 'error', 'message': 'The entrance size should be not bigger than the gridSize column' }
+    entrance_col, gridSize_col = entrance[:1], int(gridSize.split('x')[1])
+    chars = string.ascii_uppercase[:gridSize_col]
+    if entrance_col not in chars :
+        return {'status' : 'error', 'message': 'The entrance letter should fit the number of columns' }
+
+    # Check that entrance is always first row
+    if entrance[1:] != "1" :
+        return {'status' : 'error', 'message': 'The entrance should always be the first row. Example: A1, B1, C1 ' }
+
+    # We limit the minimum walls, because we don't want to slow solution:
+    rows, cols = gridSize.split('x')
+    if  len(walls) < int(rows)*int(cols) //3 :
+        more_walls = int(rows)*int(cols) // 3 - len(walls)
+        return {'status' : 'error', 'message': f'Please add at least another {more_walls} walls' }
 
     # Solve the grid at INPUT from the user
     solutions = MazeGrid(maze_config)
@@ -166,21 +179,6 @@ def get_maze(current_user, maze_id):                    #                  http:
         else :
             return {'status': 'error', 'message': f"You typed : {steps}    steps must be either min or max. "}
 
-
-    # maze_sol = request.args.get('steps')
-
-    # solution = request.args.get(steps)
-    # print(f'which solution : {maze_sol}')
-    # if maze:
-    #     try:
-    #         print(f"my maze : {maze}")
-    #         return {'status': 'success', 'message': {'id': jsonify(maze) } }
-    #
-    #     except Exception:
-    #         return {'status': 'error', 'message': f"there was an error retrieving your solution "}
-    #
-    # else:
-    #
         return {'status' : 'success' , 'message' : str(maze) }
     else :
         return {'status': 'error', 'message': f'The maze with id {id} does not exist '}

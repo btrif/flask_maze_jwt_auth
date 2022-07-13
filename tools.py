@@ -82,10 +82,10 @@ class MazeGrid():
         next_x, next_y = next_pos
 
         # Check x axis
-        if not 0 <= next_x < len(maze[0]):
+        if not 0 <= next_x < len(maze):
             return False
         # Check y axis
-        if not 0 <= next_y < len(maze):
+        if not 0 <= next_y < len(maze[0]):
             return False
         # Check for wall or already been there
         if maze[next_x][next_y] == 0 or maze[next_x][next_y] == 2:
