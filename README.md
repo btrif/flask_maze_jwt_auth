@@ -3,11 +3,12 @@
 
 # What is this?
 
-The following instructions and requirements in this repository represent a step in the [Match](https://mvpmatch.co/) community onboarding process. It's a (hopefully) simple take home exercise to be later used as a conversation starter in our technical discussion. It should also help us in reducing the number of technical challenges a client wants you to go through.
 
 # Exercise brief
 
-Create an API (consuming and producing JSON) which allows users to register, persist mazes they create in the database and get solutions for those mazes. Please read the following instructions carefully, not following them will reflect negatively on your application. You should implement the necessary logic for the following flow:
+Create an API (consuming and producing JSON) which allows users to register, 
+persist mazes they create in the database and get solutions for those mazes. 
+
 
 1. User registers via POST /user endpoint with the following fields:
     1. username (i.e. happyUser)
@@ -72,25 +73,3 @@ The following conditions must be met:
 1. the code must be deployed to a git repository with public access
 2. your API should be deployed on Heroku or a similar service and the link sent to our domain experts
 3. a Postman or a Swagger collection should be prepared and added to your repository
-
-## Miscellaneous
-
-### How long do I have to do this?
-
-You should deliver it in 7 days at latest.
-
-### What languages should the interface be in?
-
-English only
-
-### Who do I contact when I'm done?
-
-The person from [Match](https://mvpmatch.co/) that initially gave you the exercise link or email us at [techchallenge@mvpmatch.co](mailto:techchallenge@mvpmatch.co) and we will pick it up from there.
-
-### Who do I contact if I have questions?
-
-Feel free to use Slack, Discord, Email, Linkedin or carrier pigeon to get in touch with Haris or Sanjin from [Match](https://mvpmatch.co/) or email us at [techchallenge@mvpmatch.co](mailto:techchallenge@mvpmatch.co)
-
-### Will this code be shown to the client?
-
-Assume yes. Should also help us in reducing the time by clients evaluating profiles.

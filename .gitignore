@@ -1,3 +1,4 @@
 .maze_venv
 __pycache__
 .idea
+.hidden_README.md
