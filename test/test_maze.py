@@ -37,8 +37,10 @@ def test_hi_api_get_call(mocker):           # This runs Fine
 
 
 def test_get_maze_api_call_no_authentication(mocker):
-    mock_requests = mocker.patch("requests.post")
+    mock_requests = mocker.patch("requests.get")
     mock_requests.return_value = True
+    mock_requests.header = {'x-access-tokens': 'my_test_token_abcdefg0123456' }
+    mock_requests.token = mock_requests.header['x-access-tokens']
 
     expected_message = {
                         "path": "['F1', 'E1', 'D1', 'D2', 'D3', 'D4', 'D5', 'E5', 'F5', 'F6', 'F7']",
@@ -46,23 +48,24 @@ def test_get_maze_api_call_no_authentication(mocker):
                         }
 
     id = 16
+    steps = "max"
+    url = f"http://127.0.0.1:5000/maze/{id}/solution?steps={steps}"
+    request = requests.get(url)
 
-    # request = requests.get(f"http://127.0.0.1:5000/maze/{id}/solution?steps=max")
+    # TO FINISH
 
-    response = get_maze("oli",id)
+    response = get_maze("oli", id)
     print(f"response : {response}")
-
 
 
     assert 11 == 11
 
-
+'''
 import requests
 
 class A():
-
     def get_response(self, url):
         response = requests.get(url)
         return response.text
 
-
+'''

@@ -171,7 +171,7 @@ def create_maze(current_user):
 
 
 
-@app.route('/maze/<int:maze_id>/solution', methods=['GET', 'POST'])
+@app.route('/maze/<int:maze_id>/solution', methods=['GET'])
 @token_required
 def get_maze(current_user, maze_id):                    #                  http://127.0.0.1:5009/maze/10/solution?steps=min
     print(f"my request : {request.args.to_dict()}")
