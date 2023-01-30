@@ -2,15 +2,15 @@
 import string
 
 from flask import request, render_template, json, jsonify, make_response
-from models import app, Users, db, Mazes, MazeSchema
+from src.models import app, Users, db, Mazes, MazeSchema, check_only_one_exit
 
 import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 import uuid
 import jwt
-from auth import token_required
+from src.auth import token_required
 from marshmallow import fields, validate, ValidationError
-from tools import MazeGrid
+from src.tools import MazeGrid
 
 ##      ROUTES      ##
 
@@ -120,16 +120,29 @@ def create_maze(current_user):
     if entrance[1:] != "1" :
         return {'status' : 'error', 'message': 'The entrance should always be the first row. Example: A1, B1, C1 ' }
 
+    # Check only one exit
+    if not check_only_one_exit(gridSize, walls) :
+        return {'status' : 'error', 'message': 'Please assure that you have only one single exit in the last row. Add more walls.' }
+
+
     # We limit the minimum walls, because we don't want to slow solution:
     rows, cols = gridSize.split('x')
     if  len(walls) < int(rows)*int(cols) //3 :
         more_walls = int(rows)*int(cols) // 3 - len(walls)
         return {'status' : 'error', 'message': f'Please add at least another {more_walls} walls' }
 
-    # Solve the grid at INPUT from the user
-    solutions = MazeGrid(maze_config)
-    min_sol = solutions.get_min_or_max_path('min')
-    max_sol = solutions.get_min_or_max_path('max')
+    try :
+        solutions = MazeGrid(maze_config)
+    except IndexError :
+        return {'status' : 'error', 'message': f'You added a wall which is just outside the grid space. Please check and correct your walls input.' }
+
+    # Solve the grid at INPUT from the user, if there is at least one solution
+    try :
+        min_sol = solutions.get_min_or_max_path('min')
+        max_sol = solutions.get_min_or_max_path('max')
+    except ValueError :
+        return {'status' : 'error', 'message': f'There is no solution for this configuration. Please delete walls. '
+                                               f'Verify that you have at least one valid exit.' }
 
     new_maze = Mazes(
                             gridSize = gridSize,
@@ -151,6 +164,8 @@ def create_maze(current_user):
         return {"errors": err.messages}, 422
 
     db.session.add(new_maze)
+    db.session.flush()
+    result["id"] = new_maze.id
     db.session.commit()
     return result, 201
 
@@ -181,4 +196,10 @@ def get_maze(current_user, maze_id):                    #                  http:
 
         return {'status' : 'success' , 'message' : str(maze) }
     else :
-        return {'status': 'error', 'message': f'The maze with id {id} does not exist '}
+        return {'status': 'error', 'message': f'There is no maze with id {maze_id} for user {current_user.name}.'}
+
+
+
+@app.route('/hi/<string:name>')
+def hi(name):
+    return f'Hello ' + str(name)

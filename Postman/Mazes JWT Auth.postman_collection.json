@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "f95bc3a7-608a-407d-87d6-4af8e058d982",
+		"name": "Mazes JWT Auth",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "POST register",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"oli\",\r\n    \"password\" : \"oli\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{maze_url}}/register",
+					"host": [
+						"{{maze_url}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST login",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "jeni",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "jeni",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\" : \"jeni\",\r\n    \"password\" : \"jeni\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{maze_url}}/login",
+					"host": [
+						"{{maze_url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST maze",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiI2MjJhZWYwMC0wMDVjLTQxOTgtYjMxMC0wZDAwNmFjMmFkODMiLCJleHAiOjE2NTc4NzQ3NTN9.J1ecYL7GO08ek8tSAMNbxAADEDcy2lfkW8-LuXp8_HM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"entrance\": \"F1\",\r\n    \"gridSize\": \"7x9\",\r\n    \"walls\": [\"A2\", \"A7\",\r\n            \"B4\", \"B5\", \"B6\", \"B7\",\r\n            \"C1\", \"C2\", \"C4\", \"C7\",\r\n            \"D6\", \"D7\",\r\n            \"E2\", \"E3\", \"E4\", \"E6\", \"E7\",\r\n            \"G1\", \"G2\", \"G4\", \"G6\", \"G7\",\r\n            \"H2\", \"H4\", \"H6\", \"H7\", \r\n            \"I1\", \"I2\", \"I3\", \"I7\"\r\n            \r\n     ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{maze_url}}/maze",
+					"host": [
+						"{{maze_url}}"
+					],
+					"path": [
+						"maze"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiI2MjJhZWYwMC0wMDVjLTQxOTgtYjMxMC0wZDAwNmFjMmFkODMiLCJleHAiOjE2NTc2MzgzMTF9.GuhAjRtQYXiXyHe5uct8CGgzVB6QR3TPBSYrder5Mtg",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{maze_url}}/maze/4",
+					"host": [
+						"{{maze_url}}"
+					],
+					"path": [
+						"maze",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET maze",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwdWJsaWNfaWQiOiI2MjJhZWYwMC0wMDVjLTQxOTgtYjMxMC0wZDAwNmFjMmFkODMiLCJleHAiOjE2NTc4NzQ3NTN9.J1ecYL7GO08ek8tSAMNbxAADEDcy2lfkW8-LuXp8_HM",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{maze_url}}/maze/14/solution?steps=max",
+					"host": [
+						"{{maze_url}}"
+					],
+					"path": [
+						"maze",
+						"14",
+						"solution"
+					],
+					"query": [
+						{
+							"key": "steps",
+							"value": "max"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Hello",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{maze_url}}/hello",
+					"host": [
+						"{{maze_url}}"
+					],
+					"path": [
+						"hello"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

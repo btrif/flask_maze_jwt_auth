@@ -3,6 +3,7 @@ from flask import Flask, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow import Schema, fields, post_load, ValidationError, validate
 from flask_marshmallow import Marshmallow
+import string
 
 ####        The definition of our application       ####
 # Create the Flask application
@@ -87,6 +88,27 @@ class MazeSchema(Schema):
         return int(col)
 
 
+def check_only_one_exit(gridSize, walls):
+    last_row, last_col = gridSize.split('x')
+    cols = string.ascii_uppercase[:int(last_col)]
+    all_last_cols = { letter+last_row for letter in cols }
+    # print(f"all-last_cols    =   {all_last_cols}")
+    one_exit = all_last_cols - set(walls)
+    # print(f'Only one exit :    {one_exit}' )
+    if len(one_exit) <= 1 : return True
+    return False
 
+
+
+
+
+
+
+if __name__ == '__main__':
+    gridSize = "9x8"
+    walls = ["C1", "G1", "A2", "C2", "E2", "G2", "E3", "B4", "E4", "G4", "D5", "E5", "H5",
+              "D6", "H6", "B6", "D7", "G7", "H2", "A9", "B9", "D9", "E9", "F9", "G9", "H9"]
+
+    print(  check_only_one_exit(gridSize, walls)  )
 
 
