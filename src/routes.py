@@ -1,7 +1,7 @@
 #  Created by btrif Trif on 04-07-2022 , 10:47 PM.
 import string
 
-from flask import request, render_template, json, jsonify, make_response
+from flask import request, render_template, json, jsonify, make_response, redirect, url_for
 from src.models import app, Users, db, Mazes, MazeSchema, check_only_one_exit
 
 import datetime
@@ -62,6 +62,11 @@ class UserApi:
             return jsonify({'status' : "success", 'token' : token})
 
         return make_response('could not verify',  401, {'Authentication': '"login required"'})
+
+@app.route('/')
+def bona_sera():
+    # return redirect("http://www.google.com", code=302)
+    return redirect(url_for('hello'), code=302)
 
 
 
@@ -201,5 +206,5 @@ def get_maze(current_user, maze_id):                    #                  http:
 
 
 @app.route('/hi/<string:name>')
-def hi(name):
+def hi_there(name):
     return f'Hello ' + str(name)
